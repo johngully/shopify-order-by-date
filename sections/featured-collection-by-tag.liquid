@@ -19,7 +19,13 @@ function setupDateFilters() {
   }
   
   // Add a filter for each date
-  const days = `{{ "sections.featured_collection_by_tag.days" | t}}`.split(",");
+  let days = `{{ "sections.featured_collection_by_tag.days" | t}}`.split(",");
+  // Fallback to hardcoded days if the setting doesn't seem right
+  if (days.length !== 7) {
+    days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    console.warn("The key 'featured_collection_by_tag.days' does not contain the expected 7 days of the week. Falling back to hardcoded days.");
+  }
+
   days.forEach((day, i) => {
     // Get value from local storage if it exists, if no value exists default to "checked"
     let checked = "checked";
