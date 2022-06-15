@@ -10,8 +10,69 @@
 {%- endif -%}
 <noscript>{{ 'component-slider.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'template-collection.css' | asset_url | stylesheet_tag }}</noscript>
+<script>
+function setupDateFilters() {
+  // Do not setup date filters if the collection is not configured for dates
+  const filterContainer = $(".tag-group-date-filters");
+  if (!filterContainer.length) {
+    return;
+  }
+  
+  // Add a filter for each date
+  const days = `{{ "sections.featured_collection_by_tag.days" | t}}`.split(",");
+  days.forEach((day, i) => {
+    // Get value from local storage if it exists, if no value exists default to "checked"
+    let checked = "checked";
+    if (localStorage.getItem(`tag-group-date-filter-${i}`) !== null) {
+      checked = localStorage.getItem(`tag-group-date-filter-${i}`);
+    }
+    
+    // Create the filter and add it to the container
+    const filter = `<label><input type="checkbox" id="tag-group-date-filter-${i}" ${checked} data-filter-day="${i}" />${day}</label>`;
+    filterContainer.append(filter);
+  });
+
+  // Save value in local storage
+  $(".tag-group-date-filters input[type=checkbox]").on("change", function() {
+    filterDays();
+    const value = this.checked ? "checked" : "";
+    localStorage.setItem($(this).attr("id"), value);
+  });
+
+  // Run the initial filter on the groups
+  filterDays();
+}
+
+function filterDays() {
+  // Get the days that are not selected so that they can be hidden
+  const filterDays = []
+  const filters = $(".tag-group-date-filters input[type=checkbox]:not(:checked)").each(function () {
+    filterDays.push($(this).data("filter-day"));
+  });
+
+  // Inspect each group, and hide those that are in the filterDays array
+  $(".tag-group").each(function () {
+    const day = $(this).data("tag-day");
+    if (filterDays.includes(day)) {
+      $(this).hide();
+    } else {
+      $(this).show();
+    }
+  });
+}
+
+$(document).ready(function() {
+  setupDateFilters();
+});
+</script>
 
 {%- style -%}
+  .tag-group-date-filters label {
+    margin-right: .75rem;
+    opacity: .7;
+    text-transform: uppercase;
+  }
+
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
@@ -54,7 +115,10 @@
       {%- if section.settings.description != blank or section.settings.show_description and section.settings.collection.description != empty -%}
         <div class="collection__description {{ section.settings.description_style }}">{%- if section.settings.show_description -%}{{ section.settings.collection.description }}{%- else -%}{{ section.settings.description }}{% endif %}</div>
       {%- endif -%}
-    </div>
+      {%- if section.settings.tag-group-type == "any_date" or section.settings.tag-group-type == "future_date" -%}
+        <div class="tag-group-date-filters"><div class="caption-with-letter-spacing light">{{ "sections.featured_collection_by_tag.date_filter_label" | t}}</div></div>
+      {%- endif-%}
+      </div>
     {%- for tag in section.settings.collection.all_tags -%}
       {%- liquid
       assign todayDate = "now" | date: "%s" | minus: 0

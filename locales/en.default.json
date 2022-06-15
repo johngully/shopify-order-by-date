@@ -269,6 +269,10 @@
       "view_all_label": "View all products in the {{ collection_name }} collection",
       "slider": "Slider"
     },
+    "featured_collection_by_tag": {
+      "date_filter_label": "Show only these days",
+      "days": "Sun,Mon,Tue,Wed,Thu,Fri,Sat"
+    },
     "collection_list": {
       "view_all": "View all"
     },
