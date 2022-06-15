@@ -27,22 +27,20 @@ function setupDateFilters() {
   }
 
   days.forEach((day, i) => {
-    // Get value from local storage if it exists, if no value exists default to "checked"
-    let checked = "checked";
-    if (localStorage.getItem(`tag-group-date-filter-${i}`) !== null) {
-      checked = localStorage.getItem(`tag-group-date-filter-${i}`);
-    }
-    
     // Create the filter and add it to the container
-    const filter = `<label><input type="checkbox" id="tag-group-date-filter-${i}" ${checked} data-filter-day="${i}" />${day}</label>`;
+    const filter = `<label><input type="checkbox" id="tag-group-date-filter-${i}" checked data-filter-day="${i}" />${day}</label>`;
     filterContainer.append(filter);
+
+    // Setup each checkbox as a sticky field
+    // This requires the "/assets/sticky-field.js" script to be loaded
+    if (typeof setupStickyField === "function") {
+      setupStickyField(`tag-group-date-filter-${i}`);
+    }
   });
 
-  // Save value in local storage
+  // Run the filter when the checkbox is changed
   $(".tag-group-date-filters input[type=checkbox]").on("change", function() {
     filterDays();
-    const value = this.checked ? "checked" : "";
-    localStorage.setItem($(this).attr("id"), value);
   });
 
   // Run the initial filter on the groups
