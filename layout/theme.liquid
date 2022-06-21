@@ -210,7 +210,19 @@
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
-    <script src="{{ 'sticky-fields.js' | asset_url }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
+    {{ 'datepicker.css' | asset_url | stylesheet_tag }}
+    {{ 'datepicker.js' | asset_url | script_tag }}
+    {{ 'sticky-fields.js ' | asset_url | script_tag }}
+    <script>
+    $(document).ready(function(){
+      const defaultDate = getDateFromQueryString("date");
+      const leadDays = 3;
+      const productTags = getProductTags();
+      const allowedDates = filterArrayToDates(productTags);
+      setupDatePicker({ defaultDate, leadDays, allowedDates });
+    });
+    </script>
   </head>
 
   <body class="gradient">

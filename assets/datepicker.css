@@ -1,0 +1,79 @@
+/* Calendar datepicker styles for jQueryUI DatePicker */
+.datepicker-container .datepicker {
+  position: relative;
+  width: 100%;
+}
+
+.datepicker-container .datepicker input[type=text] {
+  width: 142px;
+  border: 1px solid;
+  padding: 1.5rem;
+}
+
+.datepicker-container .datepicker tr:after,
+.datepicker-container .datepicker tr:before,
+.datepicker-container .datepicker th:after,
+.datepicker-container .datepicker th:before,
+.datepicker-container .datepicker td:after,
+.datepicker-container .datepicker td:before {
+  display: none !important;
+}
+
+.datepicker-container .ui-datepicker-inline {
+  margin: 0;
+  padding-top: 0;
+  background-color: #fff;
+  color: #333;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 100000;
+}
+
+.datepicker-container .ui-datepicker-calendar {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.datepicker-container .ui-datepicker-calendar td,
+.datepicker-container .ui-datepicker-calendar th {
+  cursor: pointer;
+  text-align: center !important;
+  padding: 5px !important;
+  height: 10px !important;
+  width: 10px !important;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.datepicker-container .ui-datepicker-header {
+  border: 1px solid #ddd;
+  border-bottom: 0;
+}
+
+.datepicker-container .ui-datepicker-title {
+  text-align: center;
+  padding: 10px;
+}
+
+.datepicker-container .ui-datepicker-prev {
+  float: left;
+  padding: 10px;
+}
+
+.datepicker-container .ui-datepicker-next {
+  float: right;
+  padding: 10px;
+}
+
+.datepicker-container .ui-icon {
+  cursor: pointer;
+}
+
+.datepicker-container .ui-state-disabled {
+  opacity: .5;
+}

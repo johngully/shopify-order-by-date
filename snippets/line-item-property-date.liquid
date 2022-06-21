@@ -1,0 +1,16 @@
+{% comment %}
+    Renders a line item property text input
+
+    Accepts:
+    - line_item_name: {String} Name used to persist the line item
+    - section_id: {string} The section id of the current section
+
+    Usage:
+    {% render 'line-item-property-date', line_item_name: "Name", section_id: {{section.id}} %}
+{% endcomment %}
+<div class="datepicker-container product-form__buttons line-item-property__field">
+  <div class="datepicker">
+    <label class="form__label">{{ line_item_name }}</label>
+    <input required class="required" type="text" name="properties[{{ line_item_name }}]" form="product-form-{{ section_id }}">
+  </div>
+</div>

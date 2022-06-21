@@ -18,14 +18,8 @@ function setupDateFilters() {
     return;
   }
   
-  // Add a filter for each date
-  let days = `{{ "sections.featured_collection_by_tag.days" | t}}`.split(",");
-  // Fallback to hardcoded days if the setting doesn't seem right
-  if (days.length !== 7) {
-    days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    console.warn("The key 'featured_collection_by_tag.days' does not contain the expected 7 days of the week. Falling back to hardcoded days.");
-  }
-
+  // Create filter options for each tday in the week
+  let days = moment.weekdaysShort();
   days.forEach((day, i) => {
     // Create the filter and add it to the container
     const filter = `<label><input type="checkbox" id="tag-group-date-filter-${i}" checked data-filter-day="${i}" />${day}</label>`;
@@ -65,7 +59,23 @@ function filterDays() {
   });
 }
 
+function setupDateLinks() {
+  // Add the date of the product links.  This allows the product page to set a default value in the date picker
+  // /products/{name}?date=08-31-2022
+  $(".featured-collection-by-tag .card__heading a").attr("href", function(i, href) {
+    const tagGroup = $(this).closest(".tag-group");
+    const tagString = tagGroup.data("tag");
+    const tagDate = tagGroup.data("tag-date");
+    const dateString = moment(tagString).format("MM-DD-YYYY");
+    if (tagDate) {
+      const paramPrefix = href.includes("?") ? "&" : "?";
+      $(this).attr("href", `${href}${paramPrefix}date=${dateString}`);
+    } 
+  });
+}
+
 $(document).ready(function() {
+  setupDateLinks();
   setupDateFilters();
 });
 </script>
@@ -136,7 +146,7 @@ $(document).ready(function() {
       {%- if isAnyTag or isAnyDate or isFutureDate -%}
       <div class="tag-group" data-tag="{{tag}}" {%- if isAnyDate or isFutureDate -%} data-tag-date="{{tagDate}}" data-tag-week="{{tagWeek}}" data-tag-day="{{tagDay}}"{%- endif -%}> 
         <div class="collection__title title-wrapper title-wrapper--no-top-margin page-width">
-          <h2 class="title h2">{{ section.settings.group-prefix | escape }} {{ tag | date : "%b %d, %Y" }}</h2>
+          <h2 class="title h2">{{ section.settings.tag-group-prefix | escape }} {{ tag | date : "%b %d, %Y" }}</h2>
         </div>
         <slider-component class="slider-mobile-gutter{% if section.settings.full_width %} slider-component-full-width{% endif %}{% if show_mobile_slider == false %} page-width{% endif %}{% if show_desktop_slider == false and section.settings.full_width == false %} page-width-desktop{% endif %}{% if show_desktop_slider %} slider-component-desktop{% endif %}">
           <ul id="Slider-{{ section.id }}" class="grid product-grid contains-card{% if settings.card_style == 'standard' %} contains-card--standard{% endif %} grid--{{ section.settings.columns_desktop }}-col-desktop{% if section.settings.collection == blank %} grid--2-col-tablet-down{% else %} grid--{{ section.settings.columns_mobile }}-col-tablet-down{% endif %}{% if show_mobile_slider or show_desktop_slider %} slider{% if show_desktop_slider %} slider--desktop{% endif %}{% if show_mobile_slider %} slider--tablet grid--peek{% endif %}{% endif %}" role="list" aria-label="{{ 'sections.featured_collection.slider' | t }}">
