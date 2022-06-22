@@ -1,4 +1,3 @@
-  // Designed to work on the Product Detail page, but will work on any page with a named field
   function setupStickyField(fieldName, fieldSelector) {
     fieldSelector = fieldSelector ? fieldSelector : `#${fieldName}`;
     const field = $(fieldSelector);

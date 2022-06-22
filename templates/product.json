@@ -3,6 +3,18 @@
     "main": {
       "type": "main-product",
       "blocks": {
+        "test_name": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'line-item-property-text', line_item_name: 'Student Name', section_id: {{section.id}} %}"
+          }
+        },
+        "test_date": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'line-item-property-date', line_item_name: 'Order Date', section_id: {{section.id}} %}"
+          }
+        },
         "vendor": {
           "type": "text",
           "settings": {
@@ -99,6 +111,8 @@
         "price",
         "variant_picker",
         "quantity_selector",
+        "test_date",
+        "test_name",
         "buy_buttons",
         "description",
         "collapsible-row-0",
