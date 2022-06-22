@@ -690,6 +690,9 @@
         "tag_group_prefix": {
           "label": "Tag group prefix"
         },
+        "tag_group_date_format": {
+          "label": "Tag group date format"
+        },
         "tag_group_type": {
           "label": "Tag group type",
           "options__1": {

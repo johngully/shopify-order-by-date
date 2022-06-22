@@ -146,7 +146,7 @@ $(document).ready(function() {
       {%- if isAnyTag or isAnyDate or isFutureDate -%}
       <div class="tag-group" data-tag="{{tag}}" {%- if isAnyDate or isFutureDate -%} data-tag-date="{{tagDate}}" data-tag-week="{{tagWeek}}" data-tag-day="{{tagDay}}"{%- endif -%}> 
         <div class="collection__title title-wrapper title-wrapper--no-top-margin page-width">
-          <h2 class="title h2">{{ section.settings.tag-group-prefix | escape }} {{ tag | date : "%b %d, %Y" }}</h2>
+          <h2 class="title h2">{{ section.settings.tag-group-prefix | escape }} {{ tag | date : section.settings.tag-group-date-format }}</h2>
         </div>
         <slider-component class="slider-mobile-gutter{% if section.settings.full_width %} slider-component-full-width{% endif %}{% if show_mobile_slider == false %} page-width{% endif %}{% if show_desktop_slider == false and section.settings.full_width == false %} page-width-desktop{% endif %}{% if show_desktop_slider %} slider-component-desktop{% endif %}">
           <ul id="Slider-{{ section.id }}" class="grid product-grid contains-card{% if settings.card_style == 'standard' %} contains-card--standard{% endif %} grid--{{ section.settings.columns_desktop }}-col-desktop{% if section.settings.collection == blank %} grid--2-col-tablet-down{% else %} grid--{{ section.settings.columns_mobile }}-col-tablet-down{% endif %}{% if show_mobile_slider or show_desktop_slider %} slider{% if show_desktop_slider %} slider--desktop{% endif %}{% if show_mobile_slider %} slider--tablet grid--peek{% endif %}{% endif %}" role="list" aria-label="{{ 'sections.featured_collection.slider' | t }}">
@@ -278,6 +278,12 @@ $(document).ready(function() {
       ],
       "label": "t:sections.featured-collection-by-tag.settings.tag_group_type.label",
       "default": "any_tag"
+    },
+    {
+      "type": "text",
+      "id": "tag-group-date-format",
+      "label": "t:sections.featured-collection-by-tag.settings.tag_group_date_format.label",
+      "default": "%b %d, %Y"
     },
     {
       "type": "text",
