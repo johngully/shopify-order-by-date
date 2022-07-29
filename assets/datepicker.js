@@ -11,6 +11,11 @@ function setupDatePicker(options) {
   const dateContainer = $(".datepicker");
   const dateInput = $(".datepicker input");
 
+  // If a datepicker is not found on the page, abort the setup
+  if (!dateContainer.length) {
+    return;
+  }
+
   // Create the date picker
   dateContainer.datepicker({
     inline: true,
@@ -89,7 +94,11 @@ function isValidDate(value) {
 
 function getProductTags() {
   const productTagsString = $("section[data-product-tags]").data("product-tags");
-  const productTags = productTagsString.replace(/,\s*$/, "").split(","); // remove trailing comma, and split into an array
+  let productTags = [];
+  // If a string of product tags is provided, remove trailing comma and split into an array
+  if (productTagsString) {
+    productTags = productTagsString.replace(/,\s*$/, "").split(","); 
+  }
   return productTags;
 }
 
