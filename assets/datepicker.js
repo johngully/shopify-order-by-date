@@ -1,15 +1,15 @@
 function setupDatePicker(options) {
-// options: {
-//   defaultDate: "2022-12-31" // default value
-//   allowedDates: []          // specific days allowed (other days disabled)
-//   leadDays: 1               // days after today (prior days disabled)
-// }
-const leadDays = options.leadDays || 1;
-const allowedDates = options.allowedDates || [];
-const defaultDate = "";
-if (options.defaultDate) {
-  moment(options.defaultDate).format("MM/DD/YYYY");
-}
+  // options: {
+  //   defaultDate: "2022-12-31" // default value
+  //   allowedDates: []          // specific days allowed (other days disabled)
+  //   leadDays: 1               // days after today (prior days disabled)
+  // }
+  const leadDays = options.leadDays || 1;
+  const allowedDates = options.allowedDates || [];
+  let defaultDate = "";
+  if (options.defaultDate) {
+    defaultDate = moment(options.defaultDate).format("MM/DD/YYYY");
+  }
 
   const dateContainer = $(".datepicker");
   const dateInput = $(".datepicker input");
