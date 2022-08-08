@@ -4,9 +4,12 @@ function setupDatePicker(options) {
 //   allowedDates: []          // specific days allowed (other days disabled)
 //   leadDays: 1               // days after today (prior days disabled)
 // }
-  const defaultDate = moment(options.defaultDate).format("MM/DD/YYYY") || "";
-  const leadDays = options.leadDays || 1;
-  const allowedDates = options.allowedDates || [];
+const leadDays = options.leadDays || 1;
+const allowedDates = options.allowedDates || [];
+const defaultDate = "";
+if (options.defaultDate) {
+  moment(options.defaultDate).format("MM/DD/YYYY");
+}
 
   const dateContainer = $(".datepicker");
   const dateInput = $(".datepicker input");
