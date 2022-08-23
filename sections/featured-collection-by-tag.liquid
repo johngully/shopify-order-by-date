@@ -135,14 +135,16 @@ $(document).ready(function() {
       </div>
     {%- for tag in section.settings.collection.all_tags -%}
       {%- liquid
+      assign leadDays = 3 | times: 24 | times: 60 | times: 60
       assign todayDate = "now" | date: "%s" | minus: 0
+      assign compareDate = todayDate | plus: leadDays
       assign tagDate = tag | date : "%s" | minus : 0
       assign tagWeek = tagDate | date : "%U"
       assign tagDay = tagDate | date : "%u"
       -%}
       {%- if section.settings.tag-group-type == "any_tag" -%}{%- assign isAnyTag = true -%}{%- else -%}{%- assign isAnyTag = false -%}{%- endif -%}
       {%- if section.settings.tag-group-type == "any_date" and tagDate > 0 -%}{%- assign isAnyDate = true -%}{%- else -%}{%- assign isAnyDate = false -%}{%- endif -%}
-      {%- if section.settings.tag-group-type == "future_date" and tagDate > todayDate -%}{%- assign isFutureDate = true -%}{%- else -%}{%- assign isFutureDate = false -%}{%- endif -%}
+      {%- if section.settings.tag-group-type == "future_date" and tagDate > compareDate -%}{%- assign isFutureDate = true -%}{%- else -%}{%- assign isFutureDate = false -%}{%- endif -%}
       {%- if isAnyTag or isAnyDate or isFutureDate -%}
       <div class="tag-group" data-tag="{{tag}}" {%- if isAnyDate or isFutureDate -%} data-tag-date="{{tagDate}}" data-tag-week="{{tagWeek}}" data-tag-day="{{tagDay}}"{%- endif -%}> 
         <div class="collection__title title-wrapper title-wrapper--no-top-margin page-width">
